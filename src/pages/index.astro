@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Obj from '../components/Obj.astro';
+import { site, duo, fullAddress } from '../data/site';
+
+const [sabira, claire] = site.team.names;
+import { url } from '../lib/url';
+
+const piliers = [
+  {
+    titre: 'Un environnement sécurisé',
+    texte: 'Un espace adapté aux tout-petits, aux normes, et constamment surveillé.',
+  },
+  {
+    titre: 'Une équipe bienveillante',
+    texte: "Deux professionnelles passionnées, à l'écoute des enfants et des parents.",
+  },
+  {
+    titre: "L'éveil par le jeu",
+    texte: 'Des activités quotidiennes pour accompagner le développement de chaque enfant.',
+  },
+];
+
+const espaces = ['Salle de motricité', 'Coin lecture', 'Espace repas', 'Pièce de repos', 'Petit jardin'];
+---
+
+<Base
+  title="MAM à Valence | MAME L'Étoile, assistantes maternelles"
+  description={`MAME L'Étoile, Maison d'Assistantes Maternelles à Valence (Drôme). ${duo}, assistantes maternelles à Valence, accueillent vos enfants dans un cocon chaleureux et sécurisé.`}
+>
+  <Hero />
+
+  <section class="section mission">
+    <Obj name="sphere-bois" layer="milieu" width={150} desktopOnly style="--w:10vw; right:7%; top:14%" />
+    <Obj name="anneau" layer="fond" width={110} style="--w:clamp(60px,7vw,110px); left:5%; bottom:12%" />
+    <div class="wrap mission__inner" data-reveal>
+      <span class="eyebrow">Notre mission</span>
+      <p class="mission__texte">
+        Installées au cœur de Valence, {duo} accueillent vos enfants dans un environnement{' '}
+        <em>chaleureux, ludique et sécurisé.</em>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--lin piliers">
+    <Obj name="hochet" layer="avant" width={230} desktopOnly style="--w:15vw; right:4%; top:6%" />
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <span class="eyebrow">Nos engagements</span>
+        <h2>Pourquoi choisir <em>L'Étoile ?</em></h2>
+      </div>
+      <ol class="piliers__liste">
+        {piliers.map((p, i) => (
+          <li class="pilier" data-reveal>
+            <span class="pilier__num" aria-hidden="true">0{i + 1}</span>
+            <h3>{p.titre}</h3>
+            <p>{p.texte}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section equipe">
+    <div class="wrap duo">
+      <div class="scene">
+        <Obj name="doudou-lapin" layer="avant" width={460} style="--w:min(78%,460px); left:10%; top:8%" />
+        <Obj name="etoile" layer="fond" width={110} style="--w:22%; right:4%; top:0" />
+      </div>
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">L'équipe</span>
+        <h2>{duo}, <em>deux présences</em> pour un même cocon</h2>
+        <p class="lead">
+          {sabira}, assistante maternelle agréée depuis plus de 8 ans, est spécialisée dans les activités
+          sensorielles et l'accompagnement des émotions. {claire}, diplômée en éducation de la petite
+          enfance, est passionnée par la pédagogie Montessori et les jeux moteurs.
+        </p>
+        <a class="lien" href={url('presentation.html')}>Rencontrer l'équipe</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--lin maison">
+    <div class="wrap duo duo--inverse">
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">La maison</span>
+        <h2>Une maison <em>à taille humaine</em></h2>
+        <p class="lead">
+          Dans un quartier calme et résidentiel de Valence, un intérieur lumineux, sécurisé et décoré
+          avec soin, centré sur le respect du rythme de chaque enfant.
+        </p>
+        <ul class="espaces">{espaces.map((e) => <li>{e}</li>)}</ul>
+        <a class="lien" href={url('presentation.html')}>Visiter la maison</a>
+      </div>
+      <div class="scene">
+        <Obj name="livre" layer="avant" width={480} style="--w:min(86%,480px); left:4%; top:12%" />
+        <Obj name="pousse" layer="milieu" width={210} style="--w:36%; right:2%; bottom:0" />
+        <Obj name="lune" layer="fond" width={110} desktopOnly style="--w:20%; right:12%; top:0" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section infos" aria-labelledby="infos-titre">
+    <div class="wrap">
+      <h2 id="infos-titre" class="sr-only">Infos pratiques</h2>
+      <dl class="infos__grille" data-reveal>
+        <div>
+          <dt class="eyebrow">Jours d'accueil</dt>
+          <dd>{site.hours.daysSummary}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Horaires</dt>
+          <dd>{site.hours.label}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Adresse</dt>
+          <dd>{fullAddress}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section section--lin appel">
+    <Obj name="nuage" layer="milieu" width={300} desktopOnly style="--w:19vw; left:6%; top:22%" />
+    <Obj name="etoile" layer="avant" width={170} style="--w:clamp(80px,11vw,170px); right:8%; bottom:14%" />
+    <div class="wrap appel__inner" data-reveal>
+      <span class="eyebrow">Faisons connaissance</span>
+      <h2>Une question, <em>une visite ?</em></h2>
+      <p class="lead">Envoyez-nous un message.</p>
+      <a class="btn btn--primaire" href={url('contact.html')}>Demander une place</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .mission__inner { max-width: 1120px; text-align: center; }
+  .mission__texte {
+    margin-top: 2rem;
+    font-family: var(--font-titre);
+    font-size: clamp(36px, 4.4vw, 66px);
+    font-weight: 500;
+    line-height: 1.14;
+    color: var(--encre);
+    text-wrap: balance;
+  }
+
+  .infos__grille {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+    margin: 0;
+  }
+  .infos__grille > div { padding-top: 1.5rem; border-top: 1px solid var(--or); }
+  .infos__grille dd {
+    margin-top: 0.75rem;
+    font-family: var(--font-titre);
+    font-size: clamp(26px, 2.4vw, 36px);
+    line-height: 1.2;
+  }
+
+  .appel__inner { display: grid; justify-items: center; gap: 1.6rem; text-align: center; }
+
+  @media (max-width: 899px) {
+    .infos__grille { grid-template-columns: 1fr; }
+  }
+</style>

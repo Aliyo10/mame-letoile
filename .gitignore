@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.venv/
+__pycache__/
+tools/out/
+.env
+.DS_Store
+.claude/

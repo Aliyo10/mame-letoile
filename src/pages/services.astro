@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Obj from '../components/Obj.astro';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+const activites = [
+  { titre: 'Peinture', texte: 'Des ateliers créatifs et manuels.' },
+  { titre: 'Jeux sensoriels', texte: 'Pour stimuler les sens et la curiosité.' },
+  { titre: 'Musique', texte: "Des temps musicaux, et des temps d'éveil avec des intervenants extérieurs." },
+  { titre: 'Motricité', texte: 'Une salle dédiée et des jeux moteurs.' },
+  { titre: 'Lecture', texte: 'Un coin lecture, des histoires animées, la médiathèque du quartier.' },
+];
+
+// Uniquement des éléments du contenu existant, sans horaire : voir README avant d'en ajouter.
+const journee = [
+  { titre: "L'arrivée", texte: 'Un échange avec les parents et le carnet de liaison.' },
+  { titre: "Le jeu et l'éveil", texte: 'Peinture, jeux sensoriels, musique, motricité, lecture.' },
+  { titre: 'Le grand air', texte: 'Le petit jardin, dès que le temps le permet.' },
+  { titre: 'Le repas', texte: "Apporté par les parents, dans l'espace repas." },
+  { titre: 'La sieste', texte: 'Dans la pièce de repos, au rythme de chacun.' },
+  { titre: 'Le retour', texte: 'Un nouvel échange avec les familles.' },
+];
+---
+
+<Base
+  title="Le quotidien | Assistante maternelle à Valence, MAME L'Étoile"
+  description="Accueil régulier ou occasionnel, activités d'éveil, repas, sieste et sécurité : le quotidien à la MAME L'Étoile, votre MAM à Valence."
+>
+  <PageHero eyebrow="Le quotidien" lead="Des prestations adaptées aux besoins des enfants et des parents.">
+    <Fragment slot="objets">
+      <Obj name="nuage" layer="milieu" width={250} eager style="--w:clamp(90px,16vw,250px); left:6%; top:22%" />
+      <Obj name="sphere-bois" layer="fond" width={110} desktopOnly style="--w:7vw; right:13%; top:18%" />
+      <Obj name="hochet" layer="avant" width={170} desktopOnly style="--w:10vw; right:6%; bottom:8%" />
+    </Fragment>
+    Des journées <em>douces et rythmées</em>
+  </PageHero>
+
+  <section class="section section--lin">
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <span class="eyebrow">L'accueil</span>
+        <h2>Régulier ou <em>occasionnel</em></h2>
+        <p class="lead">Nous proposons un accueil régulier ou occasionnel, selon vos besoins et disponibilités.</p>
+      </div>
+      <dl class="pratique" data-reveal>
+        <div>
+          <dt class="eyebrow">Jours d'accueil</dt>
+          <dd class="pratique__fort">{site.hours.daysSummary}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Horaires</dt>
+          <dd class="pratique__fort">{site.hours.label}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Fermetures</dt>
+          <dd><ul>{site.closures.map((c) => <li>{c}</li>)}</ul></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <Obj name="pinceaux" layer="avant" width={230} desktopOnly style="--w:14vw; right:6%; top:8%" />
+    <Obj name="xylophone" layer="fond" width={200} desktopOnly style="--w:13vw; right:24%; top:14%" />
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <span class="eyebrow">Les activités</span>
+        <h2>Apprendre <em>en jouant</em></h2>
+        <p class="lead">Des activités éducatives, ludiques et créatives sont proposées chaque jour.</p>
+      </div>
+      <ul>
+        {activites.map((a, i) => (
+          <li class="pilier" data-reveal>
+            <span class="pilier__num" aria-hidden="true">0{i + 1}</span>
+            <h3>{a.titre}</h3>
+            <p>{a.texte}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--lin">
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <span class="eyebrow">Une journée type</span>
+        <h2>Une trame, <em>jamais une contrainte</em></h2>
+        <p class="lead">L'enfant est acteur de sa journée : l'ordre s'adapte au rythme de chacun.</p>
+      </div>
+      <div class="frise">
+        <span class="frise__filet" data-draw aria-hidden="true"></span>
+        <ol>
+          {journee.map((j) => (
+            <li data-reveal>
+              <span class="frise__point" aria-hidden="true"></span>
+              <h3>{j.titre}</h3>
+              <p>{j.texte}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap duo">
+      <div class="scene">
+        <Obj name="nuage" layer="avant" width={480} style="--w:min(90%,480px); left:4%; top:24%" />
+        <Obj name="lune" layer="fond" width={140} style="--w:24%; right:6%; top:4%" />
+      </div>
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">Repas et sieste</span>
+        <h2>Au rythme <em>de chacun</em></h2>
+        <p class="lead">
+          Les repas sont apportés par les parents. Une salle de sieste est aménagée pour le repos des enfants,
+          dans le respect du rythme de chacun.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--lin">
+    <div class="wrap duo duo--inverse">
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">Sécurité et hygiène</span>
+        <h2>Des locaux <em>sereins</em></h2>
+        <p class="lead">
+          Les locaux sont sécurisés, régulièrement nettoyés et conformes aux normes d'hygiène pour la petite
+          enfance.
+        </p>
+        <a class="btn btn--primaire" href={url('contact.html')}>Demander une place</a>
+      </div>
+      <div class="scene">
+        <Obj name="anneau" layer="avant" width={300} style="--w:56%; left:16%; top:14%" />
+        <Obj name="sphere-ivoire" layer="milieu" width={160} style="--w:28%; right:6%; bottom:10%" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pratique {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.3fr;
+    gap: 2.5rem;
+    margin: 0;
+  }
+  .pratique > div { padding-top: 1.5rem; border-top: 1px solid var(--or); }
+  .pratique dd { margin-top: 0.75rem; color: var(--texte-doux); }
+  .pratique__fort {
+    font-family: var(--font-titre);
+    font-size: clamp(26px, 2.4vw, 36px);
+    line-height: 1.2;
+    color: var(--encre) !important;
+  }
+
+  .frise { position: relative; }
+  .frise__filet {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--or);
+    transform-origin: left center;
+  }
+  .frise ol {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1.75rem;
+  }
+  .frise li { position: relative; display: grid; gap: 0.75rem; align-content: start; }
+  .frise__point {
+    width: 15px;
+    height: 15px;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    border: 1px solid var(--or);
+    background: var(--ivoire);
+  }
+  .frise h3 { font-size: clamp(26px, 2vw, 32px); }
+  .frise p { font-size: 0.95rem; }
+
+  @media (max-width: 1099px) {
+    .frise__filet {
+      top: 0;
+      bottom: 0;
+      left: 7px;
+      right: auto;
+      width: 1px;
+      height: auto;
+      transform-origin: center top;
+    }
+    .frise ol { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; }
+    .frise li { padding-left: 42px; }
+    .frise__point { position: absolute; left: 0; top: 8px; margin: 0; }
+  }
+  @media (max-width: 899px) {
+    .pratique { grid-template-columns: 1fr; }
+  }
+</style>

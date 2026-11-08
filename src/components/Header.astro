@@ -1,0 +1,150 @@
+---
+import Logo from './Logo.astro';
+import { nav } from '../data/site';
+import { url } from '../lib/url';
+
+const current = Astro.url.pathname;
+---
+
+<header class="header" data-header>
+  <div class="wrap header__bar">
+    <a class="header__logo" href={url()} aria-label="Accueil, MAME L'Étoile"><Logo /></a>
+
+    <nav class="header__nav" aria-label="Navigation principale">
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a href={url(item.href)} aria-current={current.endsWith(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="btn btn--primaire header__cta" href={url('contact.html')}>Demander une place</a>
+
+    <button class="header__burger" type="button" aria-expanded="false" aria-controls="menu-mobile" data-burger>
+      <span class="sr-only" data-burger-label>Ouvrir le menu</span>
+      <span class="header__lines" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div class="menu" id="menu-mobile" hidden data-menu>
+    <ul class="menu__list">
+      <li><a href={url()}>Accueil</a></li>
+      {nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
+    </ul>
+    <a class="btn btn--primaire" href={url('contact.html')}>Demander une place</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    transition: background-color var(--t-lent) var(--ease);
+  }
+  .header.is-scrolled, .header.is-open { background: rgb(247 241 232 / 0.94); }
+  .header__bar {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: var(--header-h);
+  }
+  .header__logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-right: auto;
+    text-decoration: none;
+  }
+  .header__nav ul { display: flex; gap: 2.2rem; }
+  .header__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-underline-offset: 0.5em;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--or);
+  }
+  .header__nav a:hover, .header__nav a[aria-current] { text-decoration-line: underline; }
+  .header__burger {
+    display: none;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--encre);
+    cursor: pointer;
+  }
+  .header__lines, .header__lines::before {
+    position: absolute;
+    left: 10px;
+    width: 28px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.6s var(--ease);
+  }
+  .header__lines { top: 20px; }
+  .header__lines::before { content: ''; left: 0; top: 8px; }
+  [aria-expanded='true'] .header__lines { transform: translateY(4px) rotate(45deg); }
+  [aria-expanded='true'] .header__lines::before { transform: translateY(-8px) rotate(-90deg); }
+
+  .menu {
+    height: calc(100dvh - var(--header-h));
+    padding: 2rem var(--gutter) 3rem;
+    background: var(--ivoire);
+  }
+  .menu__list { margin-bottom: 2.5rem; }
+  .menu__list a {
+    display: block;
+    padding-block: 0.5rem;
+    font-family: var(--font-titre);
+    font-size: 2.75rem;
+    line-height: 1.15;
+    text-decoration: none;
+  }
+  @media (max-width: 899px) {
+    .header__nav, .header__cta { display: none; }
+    .header__burger { display: block; }
+  }
+  @media (min-width: 900px) {
+    .menu { display: none; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const burger = header.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const label = header.querySelector<HTMLElement>('[data-burger-label]')!;
+  const menu = header.querySelector<HTMLElement>('[data-menu]')!;
+
+  function setOpen(open: boolean) {
+    burger.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Fermer le menu' : 'Ouvrir le menu';
+    menu.hidden = !open;
+    header.classList.toggle('is-open', open);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    window.dispatchEvent(new CustomEvent('menu:toggle', { detail: open }));
+  }
+
+  burger.addEventListener('click', () => setOpen(burger.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) {
+      setOpen(false);
+      burger.focus();
+    }
+  });
+  matchMedia('(min-width: 900px)').addEventListener('change', (e) => e.matches && setOpen(false));
+
+  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

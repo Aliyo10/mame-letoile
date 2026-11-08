@@ -1,0 +1,267 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Obj from '../components/Obj.astro';
+import { site, fullAddress } from '../data/site';
+
+const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`;
+---
+
+<Base
+  title="Contact | MAME L'Étoile, MAM à Valence"
+  description={`Contactez la MAME L'Étoile, Maison d'Assistantes Maternelles à Valence : ${fullAddress}. Une question, une visite ou une demande de place auprès de vos assistantes maternelles à Valence.`}
+>
+  <PageHero eyebrow="Contact" lead="Vous avez des questions ou souhaitez une visite ? Envoyez-nous un message.">
+    <Fragment slot="objets">
+      <Obj name="etoile" layer="avant" width={130} eager style="--w:clamp(60px,9vw,130px); right:9%; top:24%" />
+      <Obj name="sphere-ivoire" layer="fond" width={100} desktopOnly style="--w:6.5vw; left:12%; top:26%" />
+      <Obj name="doudou-lapin" layer="milieu" width={200} desktopOnly style="--w:12vw; left:6%; bottom:4%" />
+    </Fragment>
+    Faisons <em>connaissance</em>
+  </PageHero>
+
+  <section class="section section--lin">
+    <div class="wrap contact">
+      <form
+        class="form"
+        data-form
+        data-key={site.web3formsKey}
+        novalidate
+        aria-labelledby="form-titre"
+      >
+        <h2 id="form-titre">Demander <em>une place</em></h2>
+        <p class="form__note">Les champs marqués « obligatoire » sont nécessaires pour vous répondre.</p>
+
+        <div class="champ">
+          <label for="nom">Nom et prénom <span>(obligatoire)</span></label>
+          <input id="nom" name="name" type="text" autocomplete="name" required aria-describedby="nom-err" />
+          <p class="champ__err" id="nom-err" hidden></p>
+        </div>
+
+        <div class="champ">
+          <label for="email">Email <span>(obligatoire)</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err" />
+          <p class="champ__err" id="email-err" hidden></p>
+        </div>
+
+        <div class="champ">
+          <label for="tel">Téléphone</label>
+          <input id="tel" name="phone" type="tel" autocomplete="tel" />
+        </div>
+
+        <div class="form__duo">
+          <div class="champ">
+            <label for="age">Âge de l'enfant</label>
+            <input id="age" name="age_enfant" type="text" />
+          </div>
+          <div class="champ">
+            <label for="date">Date d'entrée souhaitée</label>
+            <input id="date" name="date_entree" type="date" />
+          </div>
+        </div>
+
+        <div class="champ">
+          <label for="message">Message <span>(obligatoire)</span></label>
+          <textarea id="message" name="message" rows="6" required aria-describedby="message-err"></textarea>
+          <p class="champ__err" id="message-err" hidden></p>
+        </div>
+
+        <div class="form__piege" aria-hidden="true">
+          <label>Ne pas remplir <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <button class="btn btn--primaire" type="submit" data-submit>Envoyer ma demande</button>
+        <p class="form__statut" data-statut role="status" tabindex="-1"></p>
+      </form>
+
+      <aside class="coord" data-reveal>
+        <div>
+          <span class="eyebrow">Adresse</span>
+          <p class="coord__fort">{fullAddress}</p>
+        </div>
+        <div>
+          <span class="eyebrow">Téléphone</span>
+          <a class="coord__fort" href={site.phone.href}>{site.phone.display}</a>
+        </div>
+        <div>
+          <span class="eyebrow">Email</span>
+          <a class="coord__mail" href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+        <div>
+          <span class="eyebrow">Accueil</span>
+          <p>{site.hours.daysSummary}</p>
+          <p>{site.hours.label}</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="carte-titre">
+    <div class="wrap">
+      <h2 id="carte-titre" class="carte__titre" data-reveal>Nous <em>trouver</em></h2>
+      <div class="carte" data-carte data-src={mapSrc} data-titre={`Carte : ${fullAddress}`}>
+        <div class="carte__voile">
+          <p class="lead">Google Maps n'est chargé qu'après votre clic. Google peut alors déposer des cookies.</p>
+          <button class="btn btn--secondaire" type="button" data-carte-btn>Afficher la carte</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(48px, 8vw, 140px);
+    align-items: start;
+  }
+  .form { display: grid; gap: 1.5rem; justify-items: start; }
+  .form > * { width: 100%; }
+  .form > .btn { width: auto; }
+  .form__note { font-size: 0.95rem; }
+  .form__duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .champ { display: grid; gap: 0.5rem; }
+  label { font-weight: 500; color: var(--encre); }
+  label span { font-weight: 400; font-size: 0.9em; color: var(--texte-doux); }
+  input:not([type='checkbox']), textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75em 1em;
+    border: 1px solid var(--or-texte);
+    border-radius: 14px;
+    background: var(--ivoire);
+    color: var(--encre);
+    font: inherit;
+  }
+  textarea { resize: vertical; }
+  [aria-invalid='true'] { border-width: 2px; }
+  .champ__err { font-size: 0.9rem; font-weight: 600; color: #8a2f1d; }
+  .form__piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form__statut { font-weight: 500; color: var(--encre); }
+  .form__statut:empty { display: none; }
+  .form__statut:focus { outline: none; }
+  [data-submit][disabled] { opacity: 0.6; cursor: progress; }
+
+  .coord { display: grid; gap: 2.25rem; }
+  .coord > div { padding-top: 1.25rem; border-top: 1px solid var(--or); }
+  .coord .eyebrow { margin-bottom: 0.6rem; }
+  .coord__fort {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-titre);
+    font-size: clamp(26px, 2.4vw, 34px);
+    line-height: 1.2;
+    color: var(--encre);
+  }
+  .coord__mail { display: flex; align-items: center; min-height: 44px; color: var(--encre); overflow-wrap: anywhere; }
+  .coord a { text-underline-offset: 0.3em; text-decoration-color: var(--or); text-decoration-thickness: 1px; }
+
+  .carte__titre { margin-bottom: 2.5rem; }
+  .carte {
+    position: relative;
+    min-height: 420px;
+    border: 1px solid var(--or);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--lin);
+  }
+  .carte__voile {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 1.5rem;
+    min-height: 420px;
+    padding: 2rem;
+    text-align: center;
+  }
+  .carte :global(iframe) { display: block; width: 100%; height: 480px; border: 0; }
+
+  @media (max-width: 899px) {
+    .contact { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .form__duo { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form]')!;
+  const statut = form.querySelector<HTMLElement>('[data-statut]')!;
+  const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const email = document.querySelector('a[href^="mailto:"]')!.textContent;
+
+  const messages: Record<string, string> = {
+    name: 'Indiquez votre nom et prénom.',
+    email: 'Indiquez une adresse email valide, par exemple nom@domaine.fr.',
+    message: 'Écrivez-nous quelques mots.',
+  };
+
+  function validate(field: HTMLInputElement | HTMLTextAreaElement) {
+    const err = document.getElementById(`${field.id}-err`)!;
+    const ok = field.checkValidity() && field.value.trim() !== '';
+    field.setAttribute('aria-invalid', String(!ok));
+    err.hidden = ok;
+    err.textContent = ok ? '' : messages[field.name];
+    return ok;
+  }
+
+  const required = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]')];
+  required.forEach((field) =>
+    field.addEventListener('blur', () => {
+      if (field.getAttribute('aria-invalid') === 'true' || field.value) validate(field);
+    }),
+  );
+
+  function say(text: string) {
+    statut.textContent = text;
+    statut.focus();
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const invalid = required.filter((field) => !validate(field));
+    if (invalid.length) {
+      invalid[0].focus();
+      return;
+    }
+
+    const key = form.dataset.key!;
+    if (key.startsWith('[')) {
+      say(`Le formulaire n'est pas encore activé. Écrivez-nous à ${email}.`);
+      return;
+    }
+
+    const data = Object.fromEntries(new FormData(form));
+    submit.disabled = true;
+    say('Envoi en cours…');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ ...data, access_key: key, subject: "Demande depuis le site MAME L'Étoile" }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.message);
+      form.reset();
+      required.forEach((field) => field.removeAttribute('aria-invalid'));
+      say('Merci, votre message est bien envoyé.');
+    } catch {
+      say(`L'envoi a échoué. Réessayez, ou écrivez-nous à ${email}.`);
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  const carte = document.querySelector<HTMLElement>('[data-carte]')!;
+  carte.querySelector('[data-carte-btn]')!.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = carte.dataset.src!;
+    iframe.title = carte.dataset.titre!;
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    carte.replaceChildren(iframe);
+    iframe.focus();
+  });
+</script>

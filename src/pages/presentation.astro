@@ -1,0 +1,213 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Obj from '../components/Obj.astro';
+import { site, duo } from '../data/site';
+import { url } from '../lib/url';
+
+const [sabira, claire] = site.team.names;
+
+const valeurs = [
+  {
+    titre: 'Bienveillance',
+    texte: "Chaque enfant est accueilli avec attention, dans le respect de son individualité. Aucun jugement, uniquement de l'écoute et du soutien.",
+  },
+  {
+    titre: 'Éveil',
+    texte: "Des jeux adaptés à chaque âge pour stimuler les sens, la motricité et la curiosité, et des coins jeux évolutifs selon les périodes de l'année.",
+  },
+  {
+    titre: 'Sécurité',
+    texte: 'Un environnement calme, propre et sécurisé, où chaque espace est aménagé pour prévenir les accidents, pour que parents et enfants soient sereins.',
+  },
+  {
+    titre: 'Écoute des familles',
+    texte: 'Une communication essentielle à notre approche : échanges quotidiens, carnet de liaison, réunions régulières et questionnaires de satisfaction.',
+  },
+  {
+    titre: 'Respect du rythme',
+    texte: "Repas, sieste, temps de jeux : tout suit le développement naturel de chaque enfant. Nous ne forçons pas l'activité, l'enfant est acteur de sa journée.",
+  },
+];
+
+const espaces = ['Salle de motricité', 'Coin lecture', 'Espace repas', 'Pièce de repos', 'Petit jardin'];
+---
+
+<Base
+  title="La maison | MAM à Valence, MAME L'Étoile"
+  description={`L'histoire, l'équipe et les valeurs de la MAME L'Étoile, Maison d'Assistantes Maternelles à Valence fondée en ${site.foundedLabel} par ${duo}, assistantes maternelles à Valence.`}
+>
+  <PageHero
+    eyebrow="La maison"
+    lead="L'histoire, les valeurs et l'engagement de la Maison d'Assistantes Maternelles L'Étoile."
+  >
+    <Fragment slot="objets">
+      <Obj name="etoile" layer="milieu" width={150} eager style="--w:clamp(64px,10vw,150px); left:8%; top:24%" />
+      <Obj name="sphere-ivoire" layer="fond" width={110} desktopOnly style="--w:7vw; right:12%; top:20%" />
+      <Obj name="anneau" layer="milieu" width={130} desktopOnly style="--w:8vw; right:7%; bottom:12%" />
+      <Obj name="lune" layer="fond" width={110} desktopOnly style="--w:7vw; left:14%; bottom:8%" />
+    </Fragment>
+    Une maison <em>à taille humaine</em>
+  </PageHero>
+
+  <section class="section section--lin">
+    <div class="wrap duo">
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">Notre histoire</span>
+        <h2>Fondée en {site.foundedLabel}, <em>à Valence</em></h2>
+        <p class="lead">
+          La MAME L'Étoile est née de deux professionnelles de la petite enfance, {duo}, et
+          d'un objectif commun : créer un lieu de vie chaleureux, où les enfants peuvent grandir, jouer et
+          s'épanouir en toute confiance.
+        </p>
+        <p>
+          Inspirées par leur expérience et leur passion pour l'éducation bienveillante, elles ont imaginé
+          une maison centrée sur le respect du rythme de chaque enfant. Depuis son ouverture, elle s'est
+          imposée comme un lieu de référence pour les parents en quête d'un mode de garde respectueux et
+          personnalisé.
+        </p>
+        <p>
+          Des projets pédagogiques annuels, des fêtes de saison, des ateliers parents-enfants et une forte
+          implication dans la vie de quartier renforcent son ancrage local.
+        </p>
+      </div>
+      <div class="scene">
+        <Obj name="sphere-bois" layer="avant" width={300} style="--w:58%; left:12%; top:18%" />
+        <Obj name="hochet" layer="milieu" width={210} style="--w:30%; right:8%; bottom:6%" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <Obj name="doudou-lapin" layer="avant" width={300} desktopOnly style="--w:19vw; right:4%; top:6%" />
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <span class="eyebrow">Notre équipe</span>
+        <h2>Deux professionnelles, <em>une même attention</em></h2>
+      </div>
+      <div class="equipe">
+        <article data-reveal>
+          <h3>{sabira}</h3>
+          <p class="equipe__role">Assistante maternelle agréée depuis plus de 8 ans</p>
+          <p>
+            Spécialisée dans les activités sensorielles et l'accompagnement des émotions, elle aime créer
+            des ateliers manuels et raconter des histoires animées. Son sourire et sa douceur rassurent les
+            enfants dès le premier jour. Elle est formée aux gestes de premiers secours et suit
+            régulièrement des formations continues.
+          </p>
+        </article>
+        <article data-reveal>
+          <h3>{claire}</h3>
+          <p class="equipe__role">Diplômée en éducation de la petite enfance</p>
+          <p>
+            Après avoir exercé dans plusieurs structures, elle a co-créé la MAME L'Étoile. Très à l'écoute,
+            passionnée par la pédagogie Montessori et les jeux moteurs, elle apporte une énergie
+            communicative et un cadre structurant aux journées d'accueil. Elle anime aussi des temps
+            musicaux et de relaxation pour les plus petits.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--lin">
+    <div class="wrap">
+      <div class="tete" data-reveal>
+        <span class="eyebrow">Nos valeurs</span>
+        <h2>Ce qui guide <em>nos journées</em></h2>
+      </div>
+      <ol>
+        {valeurs.map((v, i) => (
+          <li class="pilier" data-reveal>
+            <span class="pilier__num" aria-hidden="true">0{i + 1}</span>
+            <h3>{v.titre}</h3>
+            <p>{v.texte}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="credo" data-reveal>
+        Un enfant épanoui est un enfant qui se sent <em>compris et en sécurité.</em>
+      </p>
+      <p class="credo__suite" data-reveal>
+        Notre accompagnement repose sur l'observation bienveillante, l'encouragement et le soutien à
+        l'autonomie. Ici, chaque rire, chaque émotion, chaque progrès est accueilli avec joie et valorisé.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap duo duo--inverse">
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">Notre environnement</span>
+        <h2>Lumineux, sécurisé, <em>décoré avec soin</em></h2>
+        <p class="lead">
+          Dans un quartier calme et résidentiel de Valence, chaque pièce est aménagée pour assurer le
+          confort des enfants.
+        </p>
+        <ul class="espaces">{espaces.map((e) => <li>{e}</li>)}</ul>
+        <p>
+          Le petit jardin privatif permet de sortir au grand air dès que le temps le permet : activités de
+          plein air, jeux d'eau en été et mini-potagers avec les enfants au printemps.
+        </p>
+      </div>
+      <div class="scene">
+        <Obj name="livre" layer="avant" width={480} style="--w:min(86%,480px); left:4%; top:14%" />
+        <Obj name="pousse" layer="milieu" width={210} style="--w:36%; right:2%; bottom:2%" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--lin">
+    <div class="wrap duo">
+      <div class="scene">
+        <Obj name="xylophone" layer="avant" width={480} style="--w:min(88%,480px); left:6%; top:22%" />
+        <Obj name="pinceaux" layer="milieu" width={170} desktopOnly style="--w:26%; right:6%; top:0" />
+      </div>
+      <div class="duo__texte" data-reveal>
+        <span class="eyebrow">Nos projets pédagogiques</span>
+        <h2>Un fil conducteur, <em>chaque année</em></h2>
+        <p class="lead">
+          Le thème actuel : <strong>{site.pedagogicalTheme}</strong>. À travers des histoires, des ateliers
+          créatifs, des jeux sensoriels et des sorties, les enfants découvrent le monde qui les entoure.
+        </p>
+        <p>
+          Nous collaborons aussi avec la médiathèque du quartier et participons à des temps d'éveil musical
+          avec des intervenants extérieurs.
+        </p>
+        <a class="lien" href={url('services.html')}>Découvrir le quotidien</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .equipe {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(40px, 6vw, 96px);
+  }
+  .equipe article {
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    padding-top: 2rem;
+    border-top: 1px solid var(--or);
+  }
+  .equipe h3 { font-size: clamp(42px, 4.4vw, 64px); }
+  .equipe__role { font-weight: 600; color: var(--or-texte); }
+  .credo {
+    margin-top: clamp(64px, 8vw, 120px);
+    font-family: var(--font-titre);
+    font-size: clamp(34px, 4vw, 60px);
+    font-weight: 500;
+    line-height: 1.14;
+    color: var(--encre);
+    text-align: center;
+    text-wrap: balance;
+  }
+  .credo__suite { max-width: 38em; margin: 1.5rem auto 0; text-align: center; }
+  strong { color: var(--encre); font-weight: 600; }
+  @media (max-width: 899px) {
+    .equipe { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

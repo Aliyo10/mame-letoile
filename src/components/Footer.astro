@@ -1,0 +1,59 @@
+---
+import Logo from './Logo.astro';
+import { site, fullAddress, nav } from '../data/site';
+import { url } from '../lib/url';
+---
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <Logo size={150} />
+      <p class="footer__sub">{site.type} à {site.address.city}</p>
+    </div>
+    <address>
+      <span class="eyebrow">Nous trouver</span>
+      <span>{fullAddress}</span>
+      <a href={site.phone.href}>{site.phone.display}</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </address>
+    <div>
+      <span class="eyebrow">Accueil</span>
+      <p>{site.hours.daysSummary}</p>
+      <p>{site.hours.label}</p>
+    </div>
+    <nav aria-label="Pied de page">
+      <span class="eyebrow">Explorer</span>
+      <ul>{nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}</ul>
+    </nav>
+  </div>
+  <div class="wrap footer__end"><p>© {new Date().getFullYear()} {site.name}</p></div>
+</footer>
+
+<style>
+  .footer { background: var(--ivoire); padding-block: clamp(64px, 8vw, 110px) 32px; }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1.4fr 1fr 1fr;
+    gap: 3rem 2rem;
+  }
+  .footer__sub { margin-top: 0.75rem; max-width: 18em; }
+  address { font-style: normal; color: var(--texte-doux); }
+  address > * { display: block; }
+  .eyebrow { margin-bottom: 0.9rem; }
+  .footer a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--encre);
+    text-underline-offset: 0.35em;
+    text-decoration-color: var(--or);
+    text-decoration-thickness: 1px;
+  }
+  .footer__end {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 899px) {
+    .footer__grid { grid-template-columns: 1fr; }
+  }
+</style>

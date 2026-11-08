@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Obj from '../components/Obj.astro';
+import { url } from '../lib/url';
+---
+
+<Base title="Page introuvable | MAME L'Étoile" description="Cette page n'existe pas ou a été déplacée.">
+  <PageHero eyebrow="Erreur 404" lead="Cette page n'existe pas, ou elle a été déplacée.">
+    <Fragment slot="objets">
+      <Obj name="nuage" layer="milieu" width={260} eager style="--w:clamp(100px,18vw,260px); left:7%; top:22%" />
+      <Obj name="lune" layer="avant" width={150} desktopOnly style="--w:10vw; right:9%; bottom:14%" />
+    </Fragment>
+    Cette page <em>fait la sieste</em>
+  </PageHero>
+  <div class="retour"><a class="btn btn--primaire" href={url()}>Retour à l'accueil</a></div>
+</Base>
+
+<style>
+  .retour { display: flex; justify-content: center; padding-bottom: var(--section); }
+</style>
